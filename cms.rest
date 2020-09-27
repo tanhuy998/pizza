@@ -1,0 +1,284 @@
+@url = http://localhost:8080/api/admin
+@token = asdhkjaskdkj
+
+################################################
+### validation => status = 422 or 400
+### not found item => status = 404
+### all error responses => { message: "some message" }
+################################################
+
+
+########################################### Authentication
+####################
+### Same with app -- but can't register
+####################
+
+########################################### Product
+####################
+### Same with app
+####################
+
+####################
+### Create category
+####################
+POST {{url}}/category/create
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+    "name": "Pizza Gà"
+}
+
+############ Response
+{
+    "id": 0
+}
+
+####################
+### Create product
+####################
+POST {{url}}/product/create
+Content-Type: "multipart/form-data"
+Authorization: Bearer {{token}}
+
+{
+    "img": "ImgObject",
+    "name": "Pizza Gà",
+    "price": 200000,
+    "description": "Mô tả",
+    "categoryId": 0,
+}
+
+############ Response
+{
+    "id": 0
+}
+
+####################
+### Update product -- "img" can be NULL
+####################
+PUT {{url}}/product/update
+Content-Type: "multipart/form-data"
+Authorization: Bearer {{token}}
+
+{
+    "id": 0,
+    "img": "ImgObject",
+    "name": "Pizza Gà",
+    "price": 200000,
+    "description": "Mô tả",
+    "categoryId": 0
+}
+
+############ Response
+# => status = 204
+
+####################
+### Delete product
+####################
+@productId = 0
+DELETE {{url}}/product/{{productId}}
+Authorization: Bearer {{token}}
+
+############ Response
+# => status = 204
+
+########################################### Order
+####################
+### Get user order list -- DATETIME not STRING 
+####################
+GET {{url}}/order?page=1&rows=3
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "pagingData": [
+        {
+            "id": 0,
+            "createdAt": "DATETIME",
+            "totalPrice": 120000,
+            "amount": 5,
+            "address": "123 Main St",
+            "note": "Some user's note" 
+        },
+        {
+            "id": 1,
+            "createdAt": "DATETIME",
+            "totalPrice": 120000,
+            "amount": 5,
+            "address": "123 Main St",
+            "note": "Some user's note"
+        },
+    ],
+    "totalPage": 5
+}
+
+####################
+### Get user single order -- DATETIME not STRING
+####################
+@orderId = 0
+GET {{url}}/order/{{orderId}}
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "id": 0,
+    "createdAt": "DATETIME",
+    "totalPrice": 120000,
+    "amount": 4,
+    "address": "123 Main St",
+    "note": "Some user's note",
+    "name": "An Trần",
+    "phone": "0123456789",
+    "products": [
+        {
+            "id": 0,
+            "name": "Pizza Heo",
+            "price": 120000,
+            "amount": 2,
+            "size": "S"
+        },
+        {
+            "id": 1,
+            "name": "Pizza Heo",
+            "price": 120000,
+            "amount": 2,
+            "size": "S"            
+        },
+    ]
+}
+
+########################################### User
+####################
+### Get all user
+####################
+GET {{url}}/user?page=1&rows=3
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "pagingData": [
+        {
+            "id": 0,
+            "name": "Name",
+            "email": "email",
+            "phone": "0123456789",
+            "address": "123 Main St",
+            "roleId": 0,
+            "roleName": "user"
+        },
+        {
+            "id": 0,
+            "name": "Name",
+            "email": "email",
+            "phone": "0123456789",
+            "address": "123 Main St",
+            "roleId": 0,
+            "roleName": "user"
+        }
+    ],
+    "totalPage": 5
+}
+
+####################
+### Get single user
+####################
+@userId = 0
+GET {{url}}/user/{{userId}}
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "id": 0,
+    "name": "Name",
+    "email": "email",
+    "phone": "0123456789",
+    "address": "123 Main St",
+    "roleId": 0,
+    "roleName": "user"
+}
+
+####################
+### Get role list
+####################
+GET {{url}}/role
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "roles": [
+        {
+            "id": 0,
+            "name": "admin"
+        },
+        {
+            "id": 1,
+            "name": "user"
+        },
+    ]
+}
+
+####################
+### Create user
+####################
+POST {{url}}/user/create
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+  "email": "user@gmail.com",
+  "name": "User",
+  "phone": "0123456789",
+  "password": "user@123",
+  "address": "211 Thach Lam, Phu Thanh , Tan Phu",
+  "roleId": 0
+}
+
+############ Response
+{
+    "id": 0
+}
+
+####################
+### Edit user info
+####################
+PUT {{url}}/user/update
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+    "id": 0,
+    "email": "user@gmail.com",
+    "name": "User",
+    "phone": "0123456789",
+    "address": "211 Thach Lam, Phu Thanh , Tan Phu",
+    "roleId": 0
+}
+
+############ Response
+# => status = 204
+
+####################
+### Edit user password
+####################
+PUT {{url}}/user/password
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+    "id": 0,    
+    "newPassword": "new"
+}
+
+############ Response
+# => status = 204
+
+####################
+### Delete user -- check xem user có bill chưa - nếu chưa thì cho xóa
+####################
+@deleteUserId = 0
+DELETE {{url}}/user/{{deleteUserId}}
+Authorization: Bearer {{token}}
+
+############ Response
+# => status = 204

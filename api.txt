@@ -1,0 +1,129 @@
+Get /admin/products?page={page_number}
+
+{
+   "total": 50,
+   "per_page": 15,
+   "current_page": 1,
+   "last_page": 4,
+   "first_page_url": "http://laravel.app?page=1",
+   "last_page_url": "http://laravel.app?page=4",
+   "next_page_url": "http://laravel.app?page=2",
+   "prev_page_url": null,
+   "path": "http://laravel.app",
+   "from": 1,
+   "to": 15,
+   "data":[
+        {
+            // Result Object
+        },
+        {
+            // Result Object
+        }
+   ]
+}
+
+GET /admin/product/{id}
+
+{
+    id:
+    category_id:
+    Name: 
+    ImgUrl:
+    Description:
+    ProductDetails:
+    SizePrice: {
+        product_id:
+        Size_small:
+        Size_Medium:
+        Size_Large:
+    }
+    ProductDetails: {
+        Extra_Options:
+        Calcaulated_Price:
+        product_id:
+    }
+}
+
+POST /admin/product
+
+{
+    id:
+    category_id:
+    Name: 
+    ImgUrl:
+    Description:
+    ProductDetails:
+    SizePrice: {
+        product_id:
+        Size_small:
+        Size_Medium:
+        Size_Large:
+    }
+    ProductDetails: {
+        Extra_Options:
+        Calcaulated_Price:
+        product_id:
+    }
+}
+
+PUT /admin/product/
+
+{
+    id:
+    category_id:
+    Name: 
+    ImgUrl:
+    Description:
+    ProductDetails:
+    SizePrice: {
+        product_id:
+        Size_small:
+        Size_Medium:
+        Size_Large:
+    }
+    ProductDetails: {
+        Extra_Options:
+        Calcaulated_Price:
+        product_id:
+    }
+}
+
+DELETE /admin/product/{id}
+
+GET /admin/categories
+
+{
+
+}
+
+DELETE /admin/categories 
+
+{
+
+}
+
+GET /admin/category/{id}
+
+{
+
+}
+
+POST /admin/category/{id}
+
+{
+
+}
+
+PUT /admin/category/{id} 
+
+{
+
+}
+
+Delete /admin/category/{id}
+
+{
+
+}
+
+

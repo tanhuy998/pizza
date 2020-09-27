@@ -1,0 +1,279 @@
+@url = http://localhost:8080/api
+@token = asdhkjaskdkj
+
+################################################
+### validation => status = 422 or 400
+### not found item => status = 404
+### all error responses => { message: "some message" }
+################################################
+
+
+########################################### Authentication
+####################
+### Login
+####################
+POST {{url}}/auth/login
+Content-Type: "application/json"
+
+{
+  "requiredEntry": "user@gmail.com",
+  "password": "user@123"
+}
+
+############ Response
+{
+    "token": "asdasdasdas"
+}
+
+####################
+### Register
+####################
+POST {{url}}/auth/register
+Content-Type: "application/json"
+{
+  "email": "user@gmail.com",
+  "name": "User",
+  "phone": "0123456789",
+  "password": "user@123",
+  "address": "211 Thach Lam, Phu Thanh , Tan Phu"
+}
+
+############ Response
+{
+    "token": "asdasdasdas"
+}
+
+####################
+### Get user info
+####################
+GET {{url}}/self
+Authorization: Bearer {{token}}
+
+############ Response
+{
+  "email": "user@gmail.com",
+  "name": "User",
+  "phone": "0123456789",
+  "address": "211 Thach Lam, Phu Thanh , Tan Phu"
+}
+
+####################
+### Edit user info
+####################
+PUT {{url}}/self/edit
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+  "email": "user@gmail.com",
+  "name": "User",
+  "phone": "0123456789",
+  "address": "211 Thach Lam, Phu Thanh , Tan Phu"
+}
+
+############ Response
+# => status = 204
+
+####################
+### Edit user password
+####################
+PUT {{url}}/self/password
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+  "password": "user@123",
+  "newPassword": "user@1234"
+}
+
+############ Response
+# => status = 204
+
+########################################### Product
+####################
+### Get category
+####################
+GET {{url}}/category
+
+############ Response
+{
+    "categories": [
+        {
+            "id": 0,
+            "name": "Pizza",            
+        },
+        {
+            "id": 1,
+            "name": "Mì",
+        },
+    ]   
+}
+
+####################
+### Get size
+####################
+GET {{url}}/size
+
+############ Response
+{
+    "size": [
+        {
+            "id": 0,
+            "name": "S",            
+        },
+        {
+            "id": 1,
+            "name": "M",
+        },
+        {
+            "id": 1,
+            "name": "L",
+        }
+    ]   
+}
+
+####################
+### Get product list --- nếu không khai báo categoryId thì lấy hết
+####################
+GET {{url}}/product?page=1&rows=3&categoryId=0
+
+############ Response
+{
+    "pagingData": [
+        {
+            "id": 0,
+            "name": "Pizza Phở",
+            "price": 120000,
+            "img": "string",
+            "description": "Mô tả về bánh",
+            "categoryId": 0,
+            "categoryName": "Pizza",
+            "sizeId": 0,
+            "size": "S"
+        },
+        {
+            "id": 1,
+            "name": "Pizza Heo",
+            "price": 120000,
+            "img": "string",
+            "description": "Mô tả về bánh",
+            "categoryId": 0,
+            "categoryName": "Pizza",
+            "sizeId": 0,
+            "size": "S"
+        },
+    ],
+    "totalPage": 5
+}
+
+####################
+### Get single product
+####################
+@productId = 0
+GET {{url}}/product/{{productId}}
+
+############ Response
+{
+    "id": 0,
+    "name": "Pizza Phở",
+    "price": 120000,
+    "img": "string",
+    "description": "Mô tả về bánh",
+    "categoryId": 0,
+    "categoryName": "Pizza",
+    "sizeId": 0,
+    "size": "S"
+}
+
+########################################### Order
+####################
+### Get user order list -- DATETIME not STRING 
+####################
+GET {{url}}/order?page=1&rows=3
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "pagingData": [
+        {
+            "id": 0,
+            "createdAt": "DATETIME",
+            "totalPrice": 120000,
+            "amount": 5,
+            "address": "123 Main St",
+            "note": "Some user's note"
+        },
+        {
+            "id": 1,
+            "createdAt": "DATETIME",
+            "totalPrice": 120000,
+            "amount": 5,
+            "address": "123 Main St",
+            "note": "Some user's note"   
+        },
+    ],
+    "totalPage": 5
+}
+
+####################
+### Get user single order -- DATETIME not STRING
+####################
+@orderId = 0
+GET {{url}}/order/{{orderId}}
+Authorization: Bearer {{token}}
+
+############ Response
+{
+    "id": 0,
+    "createdAt": "DATETIME",
+    "totalPrice": 120000,
+    "amount": 4,
+    "address": "123 Main St",
+    "note": "Some user's note",
+    "products": [
+        {
+            "id": 0,
+            "name": "Pizza Heo",
+            "price": 120000,
+            "amount": 2,
+            "size": "S"
+        },
+        {
+            "id": 1,
+            "name": "Pizza Heo",
+            "price": 120000,
+            "amount": 2,
+            "size": "S"            
+        },
+    ]
+}
+
+####################
+### Create user order -- DATETIME not STRING -- "id" is OrderId not DetailId
+####################
+POST {{url}}/order/create
+Content-Type: "application/json"
+Authorization: Bearer {{token}}
+
+{
+    "createdAt": "DATETIME",
+    "address": "123 Main St",
+    "note": "Some user's note",
+    "products": [
+        {
+            "id": 0,
+            "amount": 2,
+            "sizeId": 0,
+        },
+        {
+            "id": 1,
+            "amount": 2,
+            "sizeId": 0,
+        }
+    ]
+}
+
+############ Response
+{
+    "id": 0
+}
