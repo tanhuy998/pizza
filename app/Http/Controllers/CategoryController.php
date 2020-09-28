@@ -18,8 +18,14 @@ class CategoryController extends Controller
 
         $new_cate->refresh();
 
-        return [
+        return response([
             'id' => $new_cate->_id,
-        ];
+        ], 201);
+    }
+
+    public function Show() {
+        $all = Category::all();
+
+        return response($all->toJson(), 200);
     }
 }

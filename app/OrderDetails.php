@@ -3,6 +3,7 @@
     namespace App;
 
     use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+    use App\Product;
 
     class OrderDetails extends Eloquent {
 
@@ -12,4 +13,9 @@
         protected $fillable = [
             'order_id', 'product_id', 'Unit_Price', 'Quantity'
         ];
+
+        public function Product() {
+
+            return $this->hasOne(Product::class);
+        }
     }

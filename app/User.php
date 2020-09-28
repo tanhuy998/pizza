@@ -10,6 +10,6 @@
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'Phone_Number', 'Email', 'Lastname', 'Password', 'Firstname'
+            'Phone_Number', 'Email', 'Lastname', 'Password', 'Firstname', 'security_role_id', 'address'
         ];
     }

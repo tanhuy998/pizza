@@ -61,14 +61,14 @@ PUT {{url}}/product/update
 Content-Type: "multipart/form-data"
 Authorization: Bearer {{token}}
 
-{
-    "id": 0,
-    "img": "ImgObject",
-    "name": "Pizza Gà",
-    "price": 200000,
-    "description": "Mô tả",
-    "categoryId": 0
-}
+    {
+        "id": 0,
+        "img": "ImgObject",
+        "name": "Pizza Gà",
+        "price": 200000,
+        "description": "Mô tả",
+        "categoryId": 0
+    }
 
 ############ Response
 # => status = 204
