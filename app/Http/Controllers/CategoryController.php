@@ -26,6 +26,7 @@ class CategoryController extends Controller
     public function Show() {
         $all = Category::all();
 
-        return response($all->toJson(), 200);
+        return response($all->toJson(), 200)
+                ->header('Content-Type', 'application/json');
     }
 }

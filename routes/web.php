@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Product as Product;
 
 /*
@@ -50,5 +51,10 @@ Route::middleware([])->prefix('admin')->group(function () {
     Route::prefix('role')->group(function() {
 
         Route::get('/', 'RoleController@Show');
+    });
+
+    Route::get('/test', function(Request $_request) {
+
+        //return $_request->header('Authorization');
     });
 });
