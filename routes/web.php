@@ -55,6 +55,6 @@ Route::middleware([])->prefix('admin')->group(function () {
 
     Route::get('/test', function(Request $_request) {
 
-        //return $_request->header('Authorization');
+        
     });
 });
