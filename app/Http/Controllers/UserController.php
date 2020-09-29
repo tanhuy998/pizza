@@ -38,10 +38,11 @@ class UserController extends Controller
 
         foreach ($users as $user) {
 
-            $role = SecurityRole::where('id', $user->security_role_id);
+            $role = SecurityRole::where('_id', $user->security_role_id)
+                                ->first();
 
             $res['pagingData'][] = [
-                "id" => $user->id,
+                "id" => $user->_id,
                 "name" => $user->lastName,
                 "email" => $user->email,
                 "phone" => $user->phoneNumber,
@@ -64,7 +65,7 @@ class UserController extends Controller
         }
 
         $role = SecurityRole::where('_id', $user->security_role_id)
-                            ->get();
+                            ->first();
 
         $res = [
             "id" => $user->_id,
@@ -84,7 +85,7 @@ class UserController extends Controller
         $data = [
             'phoneNumber' => $_request->input('phone'), 
             'email' => $_request->input('email'), 
-            'lastname' => $_request->input('name'), 
+            'lastName' => $_request->input('name'), 
             'password' => $_request->input('password'), 
             'address' => $_request->input('address'),
             'security_role_id' => $_request->input('roleId')
@@ -104,24 +105,24 @@ class UserController extends Controller
     public function Update(Request $_request) {
 
         $user = User::where('_id', $_request->input('id'))
-                    ->get();
+                    ->first();
         
         if (is_null($user)) {
-            return response(['alert' => 'out of range'], 404)
-            ->header('Content-Type', 'application/json');
+            
+            return $this->NotFound();
         }
 
         $data = [
             'phoneNumber' => $_request->input('phone'), 
             'email' => $_request->input('email'), 
-            'lastname' => $_request->input('name'), 
+            'lastName' => $_request->input('name'), 
             //'password' => $_request->input('password'), 
             'address' => $_request->input('address'),
             'security_role_id' => $_request->input('roleId')
         ];
 
         $user->fill($data);
-
+        
         $user->save();
 
         return response(['message' => 'success'], 204)
@@ -154,4 +155,6 @@ class UserController extends Controller
 
         return response([], 204);
     }
+
+    
 }

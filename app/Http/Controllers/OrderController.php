@@ -69,25 +69,42 @@ class OrderController extends Controller
         $products = [];
         $totalPrice = 0;
 
-        if (!is_null($order_details)) {
+        // if (!is_null($order_details)) {
 
-            foreach($order_details as $detail) {
+        //     foreach($order_details as $detail) {
 
-                $product = Product::where('id', $detail->product_id);
+        //         $product = Product::where('id', $detail->product_id);
 
-                $products[] = [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'price' => $detail->unitPrice,
-                    'amount' => $detail->quantity,
-                    'size' => $detail->size ?? 'S'
-                ];
+        //         $products[] = [
+        //             'id' => $product->id,
+        //             'name' => $product->name,
+        //             'price' => $detail->unitPrice,
+        //             'amount' => $detail->quantity,
+        //             'size' => $detail->size ?? 'S'
+        //         ];
 
-                $totalPrice += intval($detail->Unit_Price)*intval($detail->Quantity);
+        //         $totalPrice += intval($detail->Unit_Price)*intval($detail->Quantity);
 
-            }
-        }
+        //     }
+        // }
         
+        foreach ($order->details as $detail) {
+
+            $product = Product::where('_id' ,$detail['product_id'])
+                                ->first();
+
+            
+            $products[] = [
+                'id' => $detail['product_id'],
+                'name' => $product->name ?? '',
+                'price' => $detail['unitPrice'],
+                'amount' => $detail['quantity'],
+                'size' => $detail->size ?? 'S'
+            ];
+
+            $totalPrice += intval($detail['unitPrice'])*intval($detail['quantity']);
+        }
+
         $ret = [
             'id' => $order->_id,
             'crreateAt' => $order->created_at,
@@ -100,7 +117,7 @@ class OrderController extends Controller
             'products' => $products
         ];
 
-        return response($order->toJson())
+        return response($ret)
         ->header('Content-Type', 'application/json');
     }
 

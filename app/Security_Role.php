@@ -10,6 +10,6 @@
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'Role_Name', 'Description'
+            'roleName', 'description'
         ];
     }
