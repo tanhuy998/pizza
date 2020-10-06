@@ -6,10 +6,22 @@
 
     class User extends Eloquent {
 
-        protected $collection = 'User';
+        protected $collection = 'security_user';
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'phoneNumber', 'email', 'lastName', 'password', 'firstName', 'security_role_id', 'address'
+            'phone',
+            'email',
+            'name',
+            'password',            
+            'security_role_id',
+            'roles', // array 
+            /*
+                {
+                    _id:
+                    roleName:
+                }
+             */
+            'address'
         ];
     }

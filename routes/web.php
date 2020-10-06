@@ -15,7 +15,7 @@ use App\Product as Product;
 |
 */
 
-Route::middleware([])->prefix('admin')->group(function () {
+Route::middleware(['jwt-auth'])->prefix('admin')->group(function () {
 
     Route::prefix('category')->group(function() {
 
@@ -55,6 +55,6 @@ Route::middleware([])->prefix('admin')->group(function () {
 
     Route::get('/test', function(Request $_request) {
 
-        
-    });
+        echo 1;
+    })->name('test');
 });

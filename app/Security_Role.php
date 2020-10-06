@@ -6,10 +6,11 @@
 
     class SecurityRole extends Eloquent {
 
-        protected $collection = 'Security_Role';
+        protected $collection = 'security_role';
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'roleName', 'description'
+            'roleName',
+            'description',
         ];
     }

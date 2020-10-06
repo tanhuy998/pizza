@@ -25,11 +25,11 @@ class ProductController extends Controller
         $data = $_request->all();
 
         $updated_product->Update([
-            'ImgURL' => $data['img'],
-            'Name' => $data['name'],
-            'SizePrice' => $data['price'],
-            'Description' => $data['description'],
-            'category_id' => $data['categoryId']
+            'img' => $data['img'],
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'description' => $data['description'],
+            'categoryId' => $data['categoryId']
         ]);
 
         $updated_product->save();
@@ -43,11 +43,11 @@ class ProductController extends Controller
         $data = $_request->all();
 
         $product = Product::create([
-            'ImgURL' => $data['img'],
-            'Name' => $data['name'],
-            'SizePrice' => $data['price'],
-            'Description' => $data['description'],
-            'category_id' => $data['categoryId']
+            'img' => $data['img'],
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'description' => $data['description'],
+            'categoryId' => $data['categoryId']
         ]);
 
         $product->save();

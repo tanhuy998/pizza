@@ -44,7 +44,7 @@ class OrderController extends Controller
                 'createAt' => $order->create_at,
                 'totalPrice' => '',
                 'amount' => '',
-                'address' => $order->shipAddress,
+                'address' => $order->address,
                 'note' => ''
             ];
         }
@@ -65,7 +65,7 @@ class OrderController extends Controller
         $order_details = OrderDetails::where('_id', $order->_id)
                                         ->get();
 
-
+        $amount = 0;
         $products = [];
         $totalPrice = 0;
 
@@ -90,18 +90,19 @@ class OrderController extends Controller
         
         foreach ($order->details as $detail) {
 
-            $product = Product::where('_id' ,$detail['product_id'])
+            $product = Product::where('_id' ,$detail['productId'])
                                 ->first();
 
             
             $products[] = [
-                'id' => $detail['product_id'],
+                'id' => $detail['productId'],
                 'name' => $product->name ?? '',
                 'price' => $detail['unitPrice'],
-                'amount' => $detail['quantity'],
+                'amount' => $detail['amount'],
                 'size' => $detail->size ?? 'S'
             ];
 
+            $amount += intval($detail['amount']);
             $totalPrice += intval($detail['unitPrice'])*intval($detail['quantity']);
         }
 
@@ -109,8 +110,8 @@ class OrderController extends Controller
             'id' => $order->_id,
             'crreateAt' => $order->created_at,
             'totalPrice' => $totalPrice,
-            'amount' => '',
-            'address' => $order->Ship_Adress,
+            'amount' => $amount,
+            'address' => $order->address,
             'note' => $order->note ?? '',
             'name' => '',//$order->user->Lastname,
             'phone' => '',//$order->user->Phone_Number,

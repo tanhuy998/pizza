@@ -5,14 +5,15 @@
     use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
     use App\OrderDetails;
     use App\Product;
+use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
 
-    class Order extends Eloquent {
+class Order extends Eloquent {
 
         protected $collection = 'Order';
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'user_id', 'Order_Date', 'Ship_Address'
+            'address', 'securityUserId', 'totalPrice', 'note', 'orderDetailsList' //array
         ];
 
         public function User() {

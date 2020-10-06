@@ -11,7 +11,7 @@
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'order_id', 'product_id', 'Unit_Price', 'Quantity'
+            'orderId', 'productId', 'unitPrice', 'amount'
         ];
 
         public function Product() {

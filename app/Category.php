@@ -10,6 +10,6 @@
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'name', 'ImgURL'
+            'categoryName', 'ImgURL'
         ];
     }

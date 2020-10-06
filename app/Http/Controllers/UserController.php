@@ -38,16 +38,28 @@ class UserController extends Controller
 
         foreach ($users as $user) {
 
-            $role = SecurityRole::where('_id', $user->security_role_id)
-                                ->first();
+            //$role = SecurityRole::where('_id', $user->security_role_id)
+                                //->first();
+
+            $roles = $user->roles;
+            $role = null;
+
+            foreach($roles as $current) {
+
+                if ($current['roleName'] === 'ADMIN') {
+                    $role = $current;
+
+                    break;
+                }
+            }
 
             $res['pagingData'][] = [
                 "id" => $user->_id,
-                "name" => $user->lastName,
+                "name" => $user->name,
                 "email" => $user->email,
-                "phone" => $user->phoneNumber,
+                "phone" => $user->phone,
                 "address" => $user->address ?? '',
-                "roleId" => $user->security_role_id,
+                "roleId" => $role->_id,//$user->security_role_id,
                 "roleName" => $role->roleName
             ];
         }
@@ -64,8 +76,20 @@ class UserController extends Controller
             return $this->NotFound();
         }
 
-        $role = SecurityRole::where('_id', $user->security_role_id)
-                            ->first();
+        //$role = SecurityRole::where('_id', $user->security_role_id)
+                            //->first();
+
+        $roles = $user->roles;
+        $role = null;
+                
+        foreach($roles as $current) {
+                
+            if ($current['roleName'] === 'ADMIN') {
+                $role = $current;
+                
+                break;
+            }
+        }
 
         $res = [
             "id" => $user->_id,
@@ -73,22 +97,22 @@ class UserController extends Controller
             "email" => $user->email,
             "phone" => $user->phoneNumber,
             "address" => $user->address ?? '',
-            "roleId" => $user->security_role_id,
+            "roleId" => $role->_id,//$user->security_role_id,
             "roleName" => $role->roleName
         ];
 
         return $res;
     }
-
+    // set role for roles array
     public function Create(Request $_request) {
 
         $data = [
-            'phoneNumber' => $_request->input('phone'), 
+            'phone' => $_request->input('phone'), 
             'email' => $_request->input('email'), 
-            'lastName' => $_request->input('name'), 
+            'name' => $_request->input('name'), 
             'password' => $_request->input('password'), 
             'address' => $_request->input('address'),
-            'security_role_id' => $_request->input('roleId')
+            //'security_role_id' => $_request->input('roleId')
         ];
         
         $user = new User($data);
@@ -113,12 +137,12 @@ class UserController extends Controller
         }
 
         $data = [
-            'phoneNumber' => $_request->input('phone'), 
+            'phone' => $_request->input('phone'), 
             'email' => $_request->input('email'), 
-            'lastName' => $_request->input('name'), 
+            'name' => $_request->input('name'), 
             //'password' => $_request->input('password'), 
             'address' => $_request->input('address'),
-            'security_role_id' => $_request->input('roleId')
+            //'security_role_id' => $_request->input('roleId')
         ];
 
         $user->fill($data);

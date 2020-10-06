@@ -12,7 +12,7 @@ class CategoryController extends Controller
 
         $new_cate = new Category();
 
-        $new_cate->Name = $_request->input('name');
+        $new_cate->categoryName = $_request->input('name');
 
         $new_cate->save();
 

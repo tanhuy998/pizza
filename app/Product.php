@@ -11,6 +11,10 @@
         protected $primaryKey = '_id';
 
         protected $fillable = [
-            'category_id', 'Name', 'ImgURL', 'Description', 'SizePrice', 'ProductDetails'
+            'img',
+            'name',
+            'price',
+            'description',
+            'categoryId'
         ];
     }
