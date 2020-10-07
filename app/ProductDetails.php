@@ -6,7 +6,7 @@
 
     class ProductDetails extends Eloquent {
 
-        protected $collection = 'ProductDetails';
+        protected $collection = 'product_details';
         protected $connection = 'mongodb';
 
         protected $fillable = [

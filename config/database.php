@@ -94,7 +94,7 @@ return [
         'mongodb' => [
             'driver' => 'mongodb',
             'database' => '',
-            'dsn' => 'mongodb+srv://'.env('DB_USERNAME', 'forge').':'.env('DB_PASSWORD', '').'@cluster0.hjvqr.mongodb.net/'.env('DB_DATABASE', 'forge').'?retryWrites=true&w=majority'
+            'dsn' => 'mongodb+srv://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_CLUSTER').'/'.env('DB_DATABASE').'?retryWrites=true&w=majority'
         ]
     ],
 

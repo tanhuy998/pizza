@@ -40,14 +40,14 @@ class ProductController extends Controller
 
     public function Create(Request $_request) {
 
-        $data = $_request->all();
+        //$data = $_request->all();
 
         $product = Product::create([
-            'img' => $data['img'],
-            'name' => $data['name'],
-            'price' => $data['price'],
-            'description' => $data['description'],
-            'categoryId' => $data['categoryId']
+            //'img' => $data['img'],
+            'name' => $_request->file('name'),//$data['name'],
+            'price' => $_request->file('price'),//$data['price'],
+            'description' => $_request->file('description'),//$data['description'],
+            'categoryId' => $_request->file('categoryId')//$data['categoryId']
         ]);
 
         $product->save();

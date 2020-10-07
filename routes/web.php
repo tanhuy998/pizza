@@ -15,7 +15,7 @@ use App\Product as Product;
 |
 */
 
-Route::middleware(['jwt-auth'])->prefix('admin')->group(function () {
+Route::middleware(['jwt-auth', 'admin-role'])->prefix('admin')->group(function () {
 
     Route::prefix('category')->group(function() {
 
@@ -57,4 +57,11 @@ Route::middleware(['jwt-auth'])->prefix('admin')->group(function () {
 
         echo 1;
     })->name('test');
+});
+
+
+Route::middleware(['jwt-auth','user-role'])->prefix('order')->group(function() {
+
+    Route::get('/', 'OrderController@Show');
+    Route::get('/{id}', 'OrderController@GetById');
 });

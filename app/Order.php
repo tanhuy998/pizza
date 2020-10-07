@@ -9,7 +9,7 @@ use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
 
 class Order extends Eloquent {
 
-        protected $collection = 'Order';
+        protected $collection = 'orders';
         protected $connection = 'mongodb';
 
         protected $fillable = [

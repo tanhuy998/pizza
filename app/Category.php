@@ -6,7 +6,7 @@
 
     class Category extends Eloquent {
 
-        protected $collection = 'Category';
+        protected $collection = 'categories';
         protected $connection = 'mongodb';
 
         protected $fillable = [

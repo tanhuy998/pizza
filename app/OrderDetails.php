@@ -7,7 +7,7 @@
 
     class OrderDetails extends Eloquent {
 
-        protected $collection = 'OrderDetails';
+        protected $collection = 'order_details';
         protected $connection = 'mongodb';
 
         protected $fillable = [

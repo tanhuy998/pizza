@@ -7,6 +7,7 @@ use App\Order;
 use App\OrderDetails;
 use App\Product;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Middleware\JWTAuth;
 
 class OrderController extends Controller
 {
@@ -22,14 +23,17 @@ class OrderController extends Controller
         $temp = $db_count % $request_row;
 
         $db_pages = intval($db_count / $request_row) + ($temp === 0? 0 : 1);
-
-        if ($db_pages < $request_page) {
-
-            return $this->OutOfRange();
+        
+        if ($request_page > 1) {
+            if ($db_pages < $request_page) {
+            
+                return $this->OutOfRange();
+            }
         }
+        
 
         $ret = Order::paginate($request_row, ['*'], 'page', $request_page);
-
+        
         //$ret = $ret->toArray();
 
         $res = [
@@ -39,13 +43,23 @@ class OrderController extends Controller
 
         foreach ($ret as $order) {
             
+            $products = $order->orderDetailsList;
+
+            $amount = 0;
+            $totalPrice = 0;
+
+            foreach($products as $product) {
+                $amount += $product['amount'];
+                $totalPrice += intval($product['amount'])*intval($product['unitPrice']);
+            }
+
             $res['pagingData'][] = [
                 'id' => $order->_id,
                 'createAt' => $order->create_at,
-                'totalPrice' => '',
-                'amount' => '',
+                'totalPrice' => $totalPrice,
+                'amount' => $amount,
                 'address' => $order->address,
-                'note' => ''
+                'note' => $order->note
             ];
         }
 
@@ -58,8 +72,7 @@ class OrderController extends Controller
 
         if (is_null($order)) {
 
-            return response('', 404)
-                ->header('Content-Type', 'application/json');
+            return $this->NotFound();
         }
 
         $order_details = OrderDetails::where('_id', $order->_id)
@@ -88,7 +101,7 @@ class OrderController extends Controller
         //     }
         // }
         
-        foreach ($order->details as $detail) {
+        foreach ($order->orderDetailsList as $detail) {
 
             $product = Product::where('_id' ,$detail['productId'])
                                 ->first();
@@ -103,7 +116,7 @@ class OrderController extends Controller
             ];
 
             $amount += intval($detail['amount']);
-            $totalPrice += intval($detail['unitPrice'])*intval($detail['quantity']);
+            $totalPrice += intval($detail['unitPrice'])*intval($detail['amount']);
         }
 
         $ret = [
@@ -134,5 +147,11 @@ class OrderController extends Controller
 
     public function Update(Request $_request) {
 
+    }
+
+
+    // user order
+    public function UserOrder() {
+        
     }
 }

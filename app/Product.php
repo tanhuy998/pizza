@@ -6,7 +6,7 @@
 
     class Product extends Eloquent {
 
-        protected $collection = 'Product';
+        protected $collection = 'products';
         protected $connection = 'mongodb';
         protected $primaryKey = '_id';
 
