@@ -17,7 +17,7 @@ class AdminRole
     {
         $user = JWTAuth::GetUser();
         $role = JWTAuth::Role();
-        var_dump($role);
+        
         if (!is_null($role) && $role === 'ADMIN') return $next($request);
 
         return response(['message' => 'not authenticated'], 401)
