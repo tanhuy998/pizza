@@ -12,5 +12,5 @@
 
             return response(['alert' => 'out of range'], 404)
                 ->header('Content-Type', 'application/json');
-        } 
+        }
     }

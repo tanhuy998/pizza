@@ -136,8 +136,33 @@ class OrderController extends Controller
     }
 
     public function Create(Request $_request) {
+        
+        $order = new Order();
 
+        $order->fill([
+            'address' => $_request->input('address'),
+            'securityUserId' => JWTAuth::GetUser()->_id,
+            'note' => $_request->input('note'),
+        ]);
 
+        $products = $_request->input('products');
+        $details = [];
+        foreach ($products as $product) {
+            $details[] = [
+                'productId' => $product['id'],
+                'amount' => $product['amount']
+            ];
+        }
+
+        $order->orderDetailsList = $details;
+
+        $order->save();
+
+        $order->refresh();
+
+        return response([
+            'id' => $order->_id
+        ])->header('Content-Type', 'application/json');
     }
 
     public function Delete($id) {

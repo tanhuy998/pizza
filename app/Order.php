@@ -13,7 +13,11 @@ class Order extends Eloquent {
         protected $connection = 'mongodb';
 
         protected $fillable = [
-            'address', 'securityUserId', 'totalPrice', 'note', 'orderDetailsList' //array
+            'address', 
+            'securityUserId', 
+            'totalPrice', 
+            'note', 
+            'orderDetailsList' //array
         ];
 
         public function User() {

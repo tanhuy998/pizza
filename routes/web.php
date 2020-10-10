@@ -64,4 +64,5 @@ Route::middleware(['jwt-auth','user-role'])->prefix('order')->group(function() {
 
     Route::get('/', 'OrderController@Show');
     Route::get('/{id}', 'OrderController@GetById');
+    Route::post('/create', 'OrderController@Create');
 });
