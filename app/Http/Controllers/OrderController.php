@@ -43,11 +43,11 @@ class OrderController extends Controller
 
         foreach ($ret as $order) {
             
-            $products = $order->orderDetailsList;
-
+            $products = $order->products;
+            
             $amount = 0;
             $totalPrice = 0;
-
+            //var_dump($products);
             foreach($products as $product) {
                 $amount += $product['amount'];
                 $totalPrice += intval($product['amount'])*intval($product['unitPrice']);
