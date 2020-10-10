@@ -76,12 +76,11 @@ class JWTAuth
             ])->first();
             
             //$user = SecurityRole::all();
-        
+            var_dump($user);
             if (is_null($user)) return false;
             
             //$role = SecurityRole::where('_id', $user->security_role_id)
                                 //->first();
-            var_dump($user);
             $roles = $user->roles;
             $role = null;
 
